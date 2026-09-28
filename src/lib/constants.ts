@@ -1,8 +1,6 @@
 import { Category, PackageItem, Photo, AddonItem } from "./types";
 
 export const SHEETDB_API_URL = "https://sheetdb.io/api/v1/vtw78mod9lrzq";
-export const CLOUDINARY_URL = "cloudinary://579251134143585:BmZI37AVN3AcZK8RhGL0wN1LJpo@ihfrcyan";
-export const CLOUDINARY_CLOUD_NAME = "ihfrcyan";
 export const DEFAULT_HERO_BG_URL = "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1920&q=80";
 
 export const DEFAULT_ADMIN = {

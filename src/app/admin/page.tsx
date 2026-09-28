@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { Category, PackageItem, Photo, AddonItem } from "@/lib/types";
-import { CLOUDINARY_CLOUD_NAME, DEFAULT_HERO_BG_URL } from "@/lib/constants";
+import { DEFAULT_HERO_BG_URL } from "@/lib/constants";
 
 export default function AdminDashboardPage() {
   const { data: session, status } = useSession();
@@ -237,7 +237,7 @@ export default function AdminDashboardPage() {
       title: prev.title || file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "),
     }));
 
-    showToast("File foto dipilih. Foto akan diunggah ke Cloudinary saat Anda menekan 'Simpan Foto'.");
+    showToast("File foto dipilih. Tekan 'Simpan Foto' untuk menyimpan.");
   };
 
   const handleClosePhotoModal = () => {
@@ -1463,19 +1463,16 @@ export default function AdminDashboardPage() {
               </div>
             </div>
 
-            {/* Cloudinary Integration Info */}
+            {/* Media Storage Info */}
             <div className="glass-card p-6 sm:p-8 border-blue-500/20">
-              <h2 className="text-xl font-bold text-white mb-2">Cloudinary Staged Upload (Hemat & Bersih)</h2>
+              <h2 className="text-xl font-bold text-white mb-2">Media & Penyimpanan Gambar</h2>
               <p className="text-xs sm:text-sm text-gray-400 mb-4">
-                Sistem upload foto bekerja secara <strong>Staged Upload</strong>: file foto hanya dikirim ke Cloudinary saat Anda menekan tombol <strong>&quot;Simpan Foto&quot;</strong>. Jika form dibatalkan, foto tidak akan tersimpan di cloud storage Anda.
+                Sistem mendukung format URL gambar langsung (Direct Image Link) dari berbagai sumber seperti Unsplash, Google Drive, atau CDN hosting foto lainnya tanpa batasan kuota.
               </p>
               <div className="bg-white/[0.03] p-4 rounded-xl border border-white/10 text-xs text-gray-300 space-y-2">
                 <div className="flex items-center gap-2 text-emerald-400 font-semibold">
                   <span>✓</span>
-                  <span>Proteksi Penyimpanan: Bersih dari file sampah/batal simpan.</span>
-                </div>
-                <div className="text-gray-400">
-                  Folder Cloudinary: <code className="text-white">lensa-arsya</code> di Cloud <code className="text-white">{CLOUDINARY_CLOUD_NAME}</code>.
+                  <span>Mandiri & Fleksibel: Tanpa ketergantungan pihak ketiga atau konfigurasi API eksternal.</span>
                 </div>
               </div>
             </div>
