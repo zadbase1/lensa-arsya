@@ -20,6 +20,7 @@ export async function middleware(req: NextRequest) {
   // Contoh: admin.lensaarsya.com, admin.localhost:3000, admin.projeklensa.vercel.app
   const isAdminSubdomain =
     host.startsWith("admin.") ||
+    host.startsWith("admin-") ||
     host.includes("admin.localhost") ||
     host.split(".")[0] === "admin";
 
