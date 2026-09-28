@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { neon } from "@neondatabase/serverless";
 import { ensureDatabaseInitialized } from "@/lib/db/init";
 import { INITIAL_PACKAGES } from "@/lib/constants";
+import { getLocalPackages, addLocalPackage } from "@/lib/localDb";
 
 const connectionString =
   process.env.POSTGRES_URL ||
@@ -13,7 +14,8 @@ const connectionString =
 export async function GET() {
   try {
     if (!connectionString) {
-      return NextResponse.json({ success: true, data: INITIAL_PACKAGES, source: "fallback" });
+      const localPkgs = await getLocalPackages();
+      return NextResponse.json({ success: true, data: localPkgs, source: "local-file" });
     }
 
     await ensureDatabaseInitialized();
@@ -56,7 +58,18 @@ export async function POST(req: NextRequest) {
     }
 
     if (!connectionString) {
-      return NextResponse.json({ success: false, error: "Database belum terhubung" }, { status: 500 });
+      const newPkg = await addLocalPackage({
+        name,
+        price,
+        tagline,
+        popular: Boolean(popular),
+        features: Array.isArray(features) ? features : [],
+      });
+      return NextResponse.json({
+        success: true,
+        data: newPkg,
+        source: "local-file",
+      });
     }
 
     await ensureDatabaseInitialized();

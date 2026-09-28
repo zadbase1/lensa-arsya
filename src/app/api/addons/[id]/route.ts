@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { neon } from "@neondatabase/serverless";
-import { updateLocalPackage, deleteLocalPackage } from "@/lib/localDb";
+import { updateLocalAddon, deleteLocalAddon } from "@/lib/localDb";
 
 const connectionString =
   process.env.POSTGRES_URL ||
@@ -21,39 +21,33 @@ export async function PUT(
 
     const { id } = await context.params;
     const body = await req.json();
-    const { name, price, tagline, popular, features } = body;
+    const { name, price, desc } = body;
+
+    if (!name || !price) {
+      return NextResponse.json({ success: false, error: "Nama dan harga wajib diisi" }, { status: 400 });
+    }
 
     if (!connectionString) {
-      const updated = await updateLocalPackage(id, {
-        name,
-        price,
-        tagline,
-        popular: Boolean(popular),
-        features: Array.isArray(features) ? features : [],
-      });
+      const updated = await updateLocalAddon(id, { name, price, desc });
       if (!updated) {
-        return NextResponse.json({ success: false, error: "Paket tidak ditemukan di database lokal" }, { status: 404 });
+        return NextResponse.json({ success: false, error: "Add-on tidak ditemukan" }, { status: 404 });
       }
-      return NextResponse.json({ success: true, message: "Paket berhasil diperbarui di database lokal" });
+      return NextResponse.json({ success: true, message: "Add-on berhasil diperbarui di database lokal" });
     }
 
     const sql = neon(connectionString);
-    const featuresJson = JSON.stringify(Array.isArray(features) ? features : []);
-
     await sql`
-      UPDATE packages
+      UPDATE addons
       SET
-        name = ${name},
-        price = ${price},
-        tagline = ${tagline || ""},
-        popular = ${Boolean(popular)},
-        features = ${featuresJson}
+        name = ${name.trim()},
+        price = ${price.trim()},
+        description = ${desc?.trim() || ""}
       WHERE id = ${id}
     `;
 
-    return NextResponse.json({ success: true, message: "Paket berhasil diperbarui" });
+    return NextResponse.json({ success: true, message: "Add-on berhasil diperbarui" });
   } catch (error: unknown) {
-    const msg = error instanceof Error ? error.message : "Gagal memperbarui paket";
+    const msg = error instanceof Error ? error.message : "Gagal memperbarui add-on";
     return NextResponse.json({ success: false, error: msg }, { status: 500 });
   }
 }
@@ -71,19 +65,19 @@ export async function DELETE(
     const { id } = await context.params;
 
     if (!connectionString) {
-      const deleted = await deleteLocalPackage(id);
+      const deleted = await deleteLocalAddon(id);
       if (!deleted) {
-        return NextResponse.json({ success: false, error: "Paket tidak ditemukan di database lokal" }, { status: 404 });
+        return NextResponse.json({ success: false, error: "Add-on tidak ditemukan" }, { status: 404 });
       }
-      return NextResponse.json({ success: true, message: "Paket berhasil dihapus dari database lokal" });
+      return NextResponse.json({ success: true, message: "Add-on berhasil dihapus dari database lokal" });
     }
 
     const sql = neon(connectionString);
-    await sql`DELETE FROM packages WHERE id = ${id}`;
+    await sql`DELETE FROM addons WHERE id = ${id}`;
 
-    return NextResponse.json({ success: true, message: "Paket berhasil dihapus" });
+    return NextResponse.json({ success: true, message: "Add-on berhasil dihapus" });
   } catch (error: unknown) {
-    const msg = error instanceof Error ? error.message : "Gagal menghapus paket";
+    const msg = error instanceof Error ? error.message : "Gagal menghapus add-on";
     return NextResponse.json({ success: false, error: msg }, { status: 500 });
   }
 }

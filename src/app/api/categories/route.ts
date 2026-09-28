@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { neon } from "@neondatabase/serverless";
 import { ensureDatabaseInitialized } from "@/lib/db/init";
 import { INITIAL_CATEGORIES } from "@/lib/constants";
+import { getLocalCategories, addLocalCategory } from "@/lib/localDb";
 
 const connectionString =
   process.env.POSTGRES_URL ||
@@ -13,7 +14,8 @@ const connectionString =
 export async function GET() {
   try {
     if (!connectionString) {
-      return NextResponse.json({ success: true, data: INITIAL_CATEGORIES, source: "fallback" });
+      const localCats = await getLocalCategories();
+      return NextResponse.json({ success: true, data: localCats, source: "local-file" });
     }
 
     await ensureDatabaseInitialized();
@@ -48,7 +50,12 @@ export async function POST(req: NextRequest) {
     }
 
     if (!connectionString) {
-      return NextResponse.json({ success: false, error: "POSTGRES_URL belum dikonfigurasi." }, { status: 500 });
+      const newCat = await addLocalCategory(name);
+      return NextResponse.json({
+        success: true,
+        data: newCat,
+        source: "local-file",
+      });
     }
 
     await ensureDatabaseInitialized();

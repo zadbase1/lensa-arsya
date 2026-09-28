@@ -31,23 +31,23 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-[var(--color-surface)]/90 backdrop-blur-xl shadow-lg shadow-black/40 border-b border-red-500/15"
+          ? "bg-[var(--color-surface)]/90 backdrop-blur-xl shadow-lg shadow-black/40 border-b border-blue-500/20"
           : "bg-gradient-to-b from-[var(--color-surface)]/90 via-[var(--color-surface)]/40 to-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Logo - Merah Putih concept */}
+          {/* Logo - Putih Biru concept */}
           <Link href="/" className="flex items-center gap-3 group" onClick={() => setIsMobileOpen(false)}>
-            {/* 3 bars with Merah Putih scheme: Red, White, Red */}
+            {/* 3 bars with Putih Biru scheme: Royal Blue, White, Sapphire Blue */}
             <div className="flex gap-[3.5px] items-center">
-              <div className="w-[3.5px] h-7 bg-[#e11d48] rounded-full shadow-[0_0_8px_rgba(225,29,72,0.6)] group-hover:scale-110 transition-transform"></div>
-              <div className="w-[3.5px] h-8 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.7)] group-hover:scale-110 transition-transform delay-75"></div>
-              <div className="w-[3.5px] h-7 bg-[#be123c] rounded-full shadow-[0_0_8px_rgba(190,18,60,0.6)] group-hover:scale-110 transition-transform delay-150"></div>
+              <div className="w-[3.5px] h-7 bg-[#2563eb] rounded-full shadow-[0_0_10px_rgba(37,99,235,0.7)] group-hover:scale-110 transition-transform"></div>
+              <div className="w-[3.5px] h-8 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)] group-hover:scale-110 transition-transform delay-75"></div>
+              <div className="w-[3.5px] h-7 bg-[#1d4ed8] rounded-full shadow-[0_0_10px_rgba(29,78,216,0.7)] group-hover:scale-110 transition-transform delay-150"></div>
             </div>
             <div className="leading-none select-none">
               <span className="text-xl font-black tracking-tight text-white">
-                lensa<span className="text-[#e11d48] drop-shadow-[0_0_6px_rgba(225,29,72,0.8)]">.</span>
+                lensa<span className="text-[#3b82f6] drop-shadow-[0_0_8px_rgba(59,130,246,0.9)]">.</span>
               </span>
               <br />
               <span className="text-xl font-bold tracking-tight text-white/90">arsya</span>
@@ -85,7 +85,7 @@ export default function Navbar() {
 
           {/* Mobile Hamburger */}
           <button
-            className="md:hidden p-2.5 text-white rounded-xl bg-white/5 border border-white/10 hover:border-red-500/40 active:scale-95 transition-all"
+            className="md:hidden p-2.5 text-white rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/50 active:scale-95 transition-all"
             onClick={() => setIsMobileOpen(!isMobileOpen)}
             aria-label="Toggle menu"
             aria-expanded={isMobileOpen}
@@ -103,7 +103,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       <div
-        className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden border-b border-red-500/20 bg-[var(--color-surface)]/98 backdrop-blur-2xl ${
+        className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden border-b border-blue-500/25 bg-[var(--color-surface)]/98 backdrop-blur-2xl ${
           isMobileOpen ? "max-h-[380px] opacity-100 py-4 shadow-2xl" : "max-h-0 opacity-0 py-0"
         }`}
       >
@@ -117,13 +117,13 @@ export default function Navbar() {
                 onClick={() => setIsMobileOpen(false)}
                 className={`flex items-center justify-between py-3 px-4 rounded-xl text-base font-semibold transition-all ${
                   isActive
-                    ? "text-white bg-gradient-to-r from-[#e11d48]/25 to-transparent border-l-4 border-[#e11d48]"
+                    ? "text-white bg-gradient-to-r from-[#2563eb]/25 to-transparent border-l-4 border-[#2563eb]"
                     : "text-gray-300 hover:text-white hover:bg-white/5"
                 }`}
               >
                 <span>{link.label}</span>
                 {isActive && (
-                  <span className="w-2 h-2 rounded-full bg-[#e11d48] shadow-[0_0_8px_#e11d48]"></span>
+                  <span className="w-2 h-2 rounded-full bg-[#3b82f6] shadow-[0_0_8px_#3b82f6]"></span>
                 )}
               </Link>
             );
@@ -138,6 +138,11 @@ export default function Navbar() {
             >
               <span>Booking via WhatsApp</span>
             </a>
+            <div className="text-center pt-2">
+              <span className="text-[10px] text-gray-500 tracking-wider">
+                Crafted with excellence by <strong className="text-blue-400 font-semibold">ZielSa Project</strong>
+              </span>
+            </div>
           </div>
         </div>
       </div>

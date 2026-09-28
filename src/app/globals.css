@@ -1,23 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #e11d48;
-  --color-primary-light: #fb7185;
-  --color-primary-dark: #be123c;
+  --color-primary: #2563eb;
+  --color-primary-light: #60a5fa;
+  --color-primary-dark: #1d4ed8;
   --color-secondary: #ffffff;
-  --color-secondary-light: #f8fafc;
-  --color-accent: #f59e0b;
-  --color-accent-light: #fbbf24;
-  --color-surface: #090a0f;
-  --color-surface-light: #141724;
-  --color-surface-lighter: #202438;
+  --color-secondary-light: #f0f7ff;
+  --color-accent: #0ea5e9;
+  --color-accent-light: #38bdf8;
+  --color-surface: #070913;
+  --color-surface-light: #0f1526;
+  --color-surface-lighter: #1b243d;
   --color-text: #ffffff;
-  --color-text-muted: #9ca3af;
-  --color-text-dark: #111827;
-  --color-card: rgba(20, 23, 36, 0.75);
-  --color-card-border: rgba(225, 29, 72, 0.25);
-  --color-gradient-start: #e11d48;
-  --color-gradient-mid: #f43f5e;
+  --color-text-muted: #94a3b8;
+  --color-text-dark: #0f172a;
+  --color-card: rgba(15, 23, 42, 0.75);
+  --color-card-border: rgba(59, 130, 246, 0.22);
+  --color-gradient-start: #2563eb;
+  --color-gradient-mid: #38bdf8;
   --color-gradient-end: #ffffff;
   --font-sans: 'Inter', 'Segoe UI', system-ui, sans-serif;
 }
@@ -37,14 +37,14 @@ body {
   min-height: 100vh;
 }
 
-/* Subtle background photography grid & dots */
+/* Subtle background photography grid & dots with cyan/blue ambient glow */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 100% 50%, rgba(225, 29, 72, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 100% 50%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
     radial-gradient(circle at 0% 80%, rgba(255, 255, 255, 0.04) 0%, transparent 40%),
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
@@ -87,8 +87,8 @@ body::before {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(225, 29, 72, 0.35); }
-  50% { box-shadow: 0 0 45px rgba(225, 29, 72, 0.7); }
+  0%, 100% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.35); }
+  50% { box-shadow: 0 0 45px rgba(37, 99, 235, 0.7); }
 }
 
 @keyframes shimmer {
@@ -120,16 +120,16 @@ body::before {
 .stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
 .stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
 
-/* Gradient text - Merah Putih concept */
+/* Gradient text - Putih Biru Estetik */
 .gradient-text {
-  background: linear-gradient(135deg, #ff4d6d 0%, #e11d48 50%, #ffffff 100%);
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 50%, #ffffff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.gradient-text-red {
-  background: linear-gradient(135deg, #ffffff 0%, #ff4d6d 50%, #e11d48 100%);
+.gradient-text-blue {
+  background: linear-gradient(135deg, #ffffff 0%, #93c5fd 50%, #2563eb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -137,10 +137,10 @@ body::before {
 
 /* Glassmorphism card */
 .glass-card {
-  background: rgba(20, 23, 36, 0.75);
+  background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(225, 29, 72, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: 16px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
@@ -148,9 +148,9 @@ body::before {
 }
 
 .glass-card:hover {
-  border-color: rgba(225, 29, 72, 0.45);
+  border-color: rgba(59, 130, 246, 0.5);
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(225, 29, 72, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(37, 99, 235, 0.2);
 }
 
 /* Photo grid hover */
@@ -164,7 +164,7 @@ body::before {
 }
 
 .photo-item:hover {
-  border-color: rgba(225, 29, 72, 0.5);
+  border-color: rgba(59, 130, 246, 0.6);
 }
 
 .photo-item img {
@@ -178,7 +178,7 @@ body::before {
 .photo-item .photo-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(9, 10, 15, 0.95) 0%, rgba(9, 10, 15, 0.3) 50%, transparent 100%);
+  background: linear-gradient(to top, rgba(7, 9, 19, 0.95) 0%, rgba(7, 9, 19, 0.3) 50%, transparent 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
   display: flex;
@@ -190,9 +190,9 @@ body::before {
   opacity: 1;
 }
 
-/* Badge popular - Merah Putih vibrant */
+/* Badge popular - Putih Biru Premium */
 .badge-popular {
-  background: linear-gradient(135deg, #e11d48, #be123c);
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: #ffffff;
   font-size: 0.72rem;
   font-weight: 700;
@@ -200,7 +200,7 @@ body::before {
   border-radius: 9999px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.3);
   white-space: nowrap !important;
   display: inline-flex;
@@ -210,7 +210,7 @@ body::before {
 
 /* Button styles */
 .btn-primary {
-  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   color: white;
   font-weight: 600;
   padding: 12px 28px;
@@ -222,7 +222,7 @@ body::before {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 4px 20px rgba(225, 29, 72, 0.3);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
@@ -230,14 +230,14 @@ body::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #fb7185 0%, #e11d48 100%);
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(225, 29, 72, 0.5);
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.55);
 }
 
 .btn-primary:hover::before {
@@ -265,8 +265,8 @@ body::before {
 }
 
 .btn-outline:hover {
-  border-color: var(--color-primary);
-  background: rgba(225, 29, 72, 0.12);
+  border-color: var(--color-primary-light);
+  background: rgba(37, 99, 235, 0.15);
   transform: translateY(-2px);
   color: #ffffff;
 }
@@ -323,7 +323,7 @@ body::before {
 .lightbox-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(5, 6, 9, 0.95);
+  background: rgba(4, 6, 12, 0.95);
   backdrop-filter: blur(12px);
   z-index: 100;
   display: flex;
@@ -351,10 +351,10 @@ body::before {
 }
 
 .filter-chip.active {
-  background: linear-gradient(135deg, #e11d48, #be123c);
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   border-color: rgba(255, 255, 255, 0.3);
   color: white;
-  box-shadow: 0 4px 15px rgba(225, 29, 72, 0.35);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
 }
 
 /* Nav link */
@@ -376,7 +376,7 @@ body::before {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #e11d48, #ffffff);
+  background: linear-gradient(90deg, #2563eb, #ffffff);
   transition: width 0.3s ease;
 }
 
@@ -392,7 +392,7 @@ body::before {
   position: absolute;
   width: 16px;
   height: 16px;
-  border-color: rgba(225, 29, 72, 0.6);
+  border-color: rgba(59, 130, 246, 0.7);
   pointer-events: none;
 }
 .hud-corner-tl { top: 8px; left: 8px; border-top: 2px solid; border-left: 2px solid; }

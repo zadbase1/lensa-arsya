@@ -27,14 +27,18 @@ export const authOptions: NextAuthOptions = {
 
         // Jika database belum terhubung (misal saat preview lokal tanpa DB)
         if (!connectionString) {
+          const { getLocalAdminProfile, verifyLocalAdminPassword } = await import("@/lib/localDb");
+          const profile = await getLocalAdminProfile();
+          const isPasswordValid = await verifyLocalAdminPassword(passwordInput);
+
           if (
-            (usernameInput === "admin" || usernameInput === "crewlensaarsya@gmail.com") &&
-            (passwordInput === "lensaarsya2026" || passwordInput === "admin123")
+            (usernameInput === profile.username || usernameInput === profile.email || usernameInput === "admin") &&
+            (isPasswordValid || passwordInput === "lensaarsya2026")
           ) {
             return {
               id: "admin-local-1",
-              name: "Admin Lensa Arsya",
-              email: "crewlensaarsya@gmail.com",
+              name: profile.name || "Admin Lensa Arsya",
+              email: profile.email || "crewlensaarsya@gmail.com",
               role: "admin",
             };
           }

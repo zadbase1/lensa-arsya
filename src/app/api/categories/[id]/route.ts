@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { neon } from "@neondatabase/serverless";
+import { deleteLocalCategory } from "@/lib/localDb";
 
 const connectionString =
   process.env.POSTGRES_URL ||
@@ -21,7 +22,11 @@ export async function DELETE(
     const { id } = await context.params;
 
     if (!connectionString) {
-      return NextResponse.json({ success: false, error: "Database belum terhubung" }, { status: 500 });
+      const deleted = await deleteLocalCategory(id);
+      if (!deleted) {
+        return NextResponse.json({ success: false, error: "Kategori tidak ditemukan di database lokal" }, { status: 404 });
+      }
+      return NextResponse.json({ success: true, message: "Kategori berhasil dihapus dari database lokal" });
     }
 
     const sql = neon(connectionString);

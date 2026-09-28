@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { neon } from "@neondatabase/serverless";
+import { updateLocalPhoto, deleteLocalPhoto } from "@/lib/localDb";
 
 const connectionString =
   process.env.POSTGRES_URL ||
@@ -23,7 +24,17 @@ export async function PUT(
     const { title, description, image_url, category, sort_order } = body;
 
     if (!connectionString) {
-      return NextResponse.json({ success: false, error: "Database belum terhubung" }, { status: 500 });
+      const updated = await updateLocalPhoto(id, {
+        title,
+        description,
+        image_url,
+        category,
+        sort_order: Number(sort_order) || 1,
+      });
+      if (!updated) {
+        return NextResponse.json({ success: false, error: "Foto tidak ditemukan di database lokal" }, { status: 404 });
+      }
+      return NextResponse.json({ success: true, message: "Foto berhasil diperbarui di database lokal" });
     }
 
     const sql = neon(connectionString);
@@ -58,7 +69,11 @@ export async function DELETE(
     const { id } = await context.params;
 
     if (!connectionString) {
-      return NextResponse.json({ success: false, error: "Database belum terhubung" }, { status: 500 });
+      const deleted = await deleteLocalPhoto(id);
+      if (!deleted) {
+        return NextResponse.json({ success: false, error: "Foto tidak ditemukan di database lokal" }, { status: 404 });
+      }
+      return NextResponse.json({ success: true, message: "Foto berhasil dihapus dari database lokal" });
     }
 
     const sql = neon(connectionString);

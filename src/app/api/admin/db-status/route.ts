@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { neon } from "@neondatabase/serverless";
 import { ensureDatabaseInitialized } from "@/lib/db/init";
+import { getLocalDbStats } from "@/lib/localDb";
 
 const connectionString =
   process.env.POSTGRES_URL ||
@@ -17,9 +18,12 @@ export async function GET() {
     }
 
     if (!connectionString) {
+      const stats = await getLocalDbStats();
       return NextResponse.json({
-        connected: false,
-        message: "Variabel lingkungan POSTGRES_URL / DATABASE_URL belum diatur di Vercel.",
+        connected: true,
+        isLocal: true,
+        message: "Mode File Database Lokal Aktif (data/local-db.json). Anda dapat mengetes fitur tambah, edit, dan hapus foto/paket secara langsung tanpa konfigurasi database cloud!",
+        stats,
       });
     }
 

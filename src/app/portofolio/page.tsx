@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getCategories, getPhotos } from "@/lib/storage";
 import { Photo } from "@/lib/types";
+import { INITIAL_PHOTOS, INITIAL_CATEGORIES } from "@/lib/constants";
 
 const photoTips = [
   {
@@ -23,8 +24,11 @@ const photoTips = [
 export default function PortofolioPage() {
   const [activeFilter, setActiveFilter] = useState("Semua");
   const [lightbox, setLightbox] = useState<null | Photo>(null);
-  const [photosList, setPhotosList] = useState<Photo[]>([]);
-  const [categoriesList, setCategoriesList] = useState<string[]>(["Semua"]);
+  const [photosList, setPhotosList] = useState<Photo[]>(INITIAL_PHOTOS);
+  const [categoriesList, setCategoriesList] = useState<string[]>([
+    "Semua",
+    ...INITIAL_CATEGORIES.map((c) => c.name),
+  ]);
 
   useEffect(() => {
     Promise.all([
@@ -49,13 +53,13 @@ export default function PortofolioPage() {
   return (
     <div className="pt-24 sm:pt-28 pb-24 min-h-screen relative overflow-hidden">
       {/* Ambient background glows */}
-      <div className="absolute top-20 right-1/4 w-[600px] h-[350px] bg-red-600/12 rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute top-2/3 -left-32 w-96 h-96 bg-red-700/10 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-20 right-1/4 w-[600px] h-[350px] bg-blue-600/12 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-2/3 -left-32 w-96 h-96 bg-blue-700/10 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="section-heading mb-10 sm:mb-14">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-red-400 bg-red-950/40 border border-red-500/30 mb-3">
+          <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-blue-400 bg-blue-950/40 border border-blue-500/30 mb-3">
             Koleksi Visual
           </span>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white mb-4">
@@ -102,7 +106,7 @@ export default function PortofolioPage() {
 
               {/* Viewfinder corner watermark on hover */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none p-4 flex flex-col justify-between">
-                <div className="flex justify-between items-center text-[10px] font-mono text-red-400 uppercase tracking-widest bg-black/60 px-2.5 py-1 rounded backdrop-blur-sm self-start">
+                <div className="flex justify-between items-center text-[10px] font-mono text-blue-400 uppercase tracking-widest bg-black/60 px-2.5 py-1 rounded backdrop-blur-sm self-start">
                   <span>[ FOCUS LOCK ]</span>
                 </div>
               </div>
@@ -111,7 +115,7 @@ export default function PortofolioPage() {
               <div className="photo-overlay flex flex-col justify-end p-6">
                 <div>
                   <div className="flex items-center gap-2 mb-1.5">
-                    <span className="text-[11px] font-bold text-white bg-red-600 px-2 py-0.5 rounded uppercase tracking-wider shadow-sm">
+                    <span className="text-[11px] font-bold text-white bg-blue-600 px-2 py-0.5 rounded uppercase tracking-wider shadow-sm">
                       {photo.category}
                     </span>
                   </div>
@@ -121,7 +125,7 @@ export default function PortofolioPage() {
                   <p className="text-xs text-gray-300 mt-1 line-clamp-2">
                     {photo.description}
                   </p>
-                  <span className="text-xs text-red-300 flex items-center gap-1 mt-2 font-medium">
+                  <span className="text-xs text-blue-300 flex items-center gap-1 mt-2 font-medium">
                     <span>Klik untuk memperbesar</span>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
@@ -140,9 +144,9 @@ export default function PortofolioPage() {
         )}
 
         {/* Section: Tips Persiapan Sesi Foto */}
-        <div className="glass-card p-8 sm:p-10 border-red-500/30 mb-16">
+        <div className="glass-card p-8 sm:p-10 border-blue-500/30 mb-16">
           <div className="text-center max-w-2xl mx-auto mb-8">
-            <span className="text-xs font-bold text-red-400 uppercase tracking-wider">Tips Pemotretan</span>
+            <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">Tips Pemotretan</span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white mt-1">
               Persiapan Agar Hasil Foto <span className="gradient-text">Maksimal</span>
             </h2>
@@ -162,7 +166,7 @@ export default function PortofolioPage() {
         </div>
 
         {/* Bottom CTA Box */}
-        <div className="text-center p-8 sm:p-12 rounded-2xl bg-gradient-to-r from-red-950/40 via-red-900/30 to-red-950/40 border border-red-500/40">
+        <div className="text-center p-8 sm:p-12 rounded-2xl bg-gradient-to-r from-blue-950/40 via-blue-900/30 to-blue-950/40 border border-blue-500/40">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
             Punya Referensi Foto atau Konsep Khusus?
           </h2>
@@ -195,7 +199,7 @@ export default function PortofolioPage() {
             {/* Close Button */}
             <button
               onClick={() => setLightbox(null)}
-              className="absolute -top-12 right-2 text-white/80 hover:text-white p-2 rounded-full bg-white/10 hover:bg-red-600 transition-colors z-20"
+              className="absolute -top-12 right-2 text-white/80 hover:text-white p-2 rounded-full bg-white/10 hover:bg-blue-600 transition-colors z-20"
               aria-label="Tutup foto"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -203,7 +207,7 @@ export default function PortofolioPage() {
               </svg>
             </button>
 
-            <div className="glass-card overflow-hidden !rounded-2xl border-red-500/40 shadow-2xl shadow-black/80">
+            <div className="glass-card overflow-hidden !rounded-2xl border-blue-500/40 shadow-2xl shadow-black/80">
               <div className="relative bg-black/70 flex items-center justify-center">
                 <img
                   src={lightbox.image_url}
@@ -212,10 +216,10 @@ export default function PortofolioPage() {
                 />
               </div>
 
-              <div className="p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#10121d]">
+              <div className="p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#0a0f1d]">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[11px] font-bold text-white bg-red-600 px-2 py-0.5 rounded uppercase tracking-wider">
+                    <span className="text-[11px] font-bold text-white bg-blue-600 px-2 py-0.5 rounded uppercase tracking-wider">
                       {lightbox.category}
                     </span>
                   </div>

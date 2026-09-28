@@ -11,14 +11,14 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative bg-[#06070a] border-t border-red-500/20 text-white overflow-hidden">
+    <footer className="relative bg-[#05070d] border-t border-blue-500/20 text-white overflow-hidden">
       {/* Ambient background glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-red-600/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
 
       {/* CTA Box */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 relative z-10">
-        <div className="glass-card p-8 sm:p-12 text-center border-red-500/30 relative overflow-hidden bg-gradient-to-b from-[#121524] to-[#0c0e18]">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-red-400 bg-red-950/60 border border-red-500/30 mb-4">
+        <div className="glass-card p-8 sm:p-12 text-center border-blue-500/30 relative overflow-hidden bg-gradient-to-b from-[#0f172a] to-[#090d1a]">
+          <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-blue-400 bg-blue-950/60 border border-blue-500/30 mb-4">
             Konsultasi Langsung
           </span>
 
@@ -43,7 +43,7 @@ export default function Footer() {
             </a>
             <a
               href="mailto:crewlensaarsya@gmail.com"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-red-500/50 whitespace-nowrap flex-shrink-0"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-blue-500/50 whitespace-nowrap flex-shrink-0"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="flex-shrink-0">
                 <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -56,19 +56,19 @@ export default function Footer() {
       </div>
 
       {/* Footer Navigation & Copyright */}
-      <div className="border-t border-white/10 relative z-10 bg-[#040407]">
+      <div className="border-t border-white/10 relative z-10 bg-[#030509]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            {/* Merah Putih Logo */}
+            {/* Putih Biru Logo */}
             <Link href="/" className="flex items-center gap-3 group">
               <div className="flex gap-[3px] items-center">
-                <div className="w-[3px] h-6 bg-[#e11d48] rounded-full"></div>
-                <div className="w-[3px] h-7 bg-white rounded-full"></div>
-                <div className="w-[3px] h-6 bg-[#be123c] rounded-full"></div>
+                <div className="w-[3px] h-6 bg-[#2563eb] rounded-full shadow-[0_0_8px_rgba(37,99,235,0.6)]"></div>
+                <div className="w-[3px] h-7 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
+                <div className="w-[3px] h-6 bg-[#1d4ed8] rounded-full shadow-[0_0_8px_rgba(29,78,216,0.6)]"></div>
               </div>
               <div className="leading-tight">
                 <span className="text-base font-black tracking-tight text-white">
-                  lensa<span className="text-red-500">.</span>
+                  lensa<span className="text-blue-500">.</span>
                 </span>
                 <br />
                 <span className="text-base font-bold tracking-tight text-white/90">arsya</span>
@@ -81,7 +81,7 @@ export default function Footer() {
                 © {new Date().getFullYear()} Lensa Arsya. <em className="text-gray-300">More than what you see.</em>
               </p>
               <p className="text-[11px] text-gray-500 mt-0.5">
-                Konsep Fotografi Merah Putih — Profesional, Kreatif, & Terjangkau.
+                Studio Fotografi Modern & Estetik — Profesional, Kreatif, & Terjangkau.
               </p>
             </div>
 
@@ -99,6 +99,24 @@ export default function Footer() {
               <Link href="/tentang" className="text-gray-400 hover:text-white transition-colors">
                 Tentang
               </Link>
+            </div>
+          </div>
+
+          {/* ZielSa Project Creator Credit Bar */}
+          <div className="mt-8 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400">
+            <div className="flex items-center gap-2">
+              <span>Website Architecture & Design by</span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-blue-950/80 via-blue-900/40 to-slate-900/80 border border-blue-500/30 text-white font-semibold shadow-[0_0_15px_rgba(37,99,235,0.2)] tracking-wide">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-blue-400">
+                  ZielSa Project
+                </span>
+              </span>
+            </div>
+            <div className="flex items-center gap-2 text-[11px] text-gray-500">
+              <span className="w-1 h-1 rounded-full bg-white/20"></span>
+              <span>Crafted for Creative Excellence</span>
+              <span className="w-1 h-1 rounded-full bg-white/20"></span>
             </div>
           </div>
         </div>

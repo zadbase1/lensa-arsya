@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { neon } from "@neondatabase/serverless";
 import bcrypt from "bcryptjs";
 import { ensureDatabaseInitialized } from "@/lib/db/init";
+import { getLocalAdminProfile, updateLocalAdminProfile } from "@/lib/localDb";
 
 const connectionString =
   process.env.POSTGRES_URL ||
@@ -18,9 +19,10 @@ export async function GET() {
     }
 
     if (!connectionString) {
+      const localProfile = await getLocalAdminProfile();
       return NextResponse.json({
         success: true,
-        data: { username: "admin", name: "Admin Lensa Arsya", email: "crewlensaarsya@gmail.com" },
+        data: localProfile,
       });
     }
 
@@ -49,10 +51,11 @@ export async function PUT(req: NextRequest) {
     const { username, newPassword } = await req.json();
 
     if (!connectionString) {
+      await updateLocalAdminProfile(username, newPassword);
       return NextResponse.json({
-        success: false,
-        error: "Database Vercel Postgres belum terhubung.",
-      }, { status: 500 });
+        success: true,
+        message: "Profil admin berhasil diperbarui di database lokal!",
+      });
     }
 
     await ensureDatabaseInitialized();

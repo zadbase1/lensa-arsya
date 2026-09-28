@@ -26,3 +26,16 @@ export interface AdminUser {
   username: string;
   password?: string;
 }
+
+export interface SiteSettings {
+  hero_bg_url: string;
+}
+
+export interface AddonItem {
+  id: string;
+  name: string;
+  price: string;
+  desc?: string;
+}
+
+

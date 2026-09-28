@@ -23,52 +23,77 @@ export async function middleware(req: NextRequest) {
     host.includes("admin.localhost") ||
     host.split(".")[0] === "admin";
 
-  // ==========================================
-  // KASUS 1: PENGUNJUNG DI DOMAIN UTAMA
-  // ==========================================
-  if (!isAdminSubdomain) {
-    // Jika seseorang mencoba mengakses rute admin atau login di domain utama,
-    // langsung redirect ke halaman utama (/) agar dashboard admin tersembunyi total.
-    if (pathname.startsWith("/admin") || pathname === "/login") {
-      url.pathname = "/";
-      return NextResponse.redirect(url);
-    }
-    // Halaman publik berjalan seperti biasa
+  // Jalur cepat untuk seluruh halaman publik di domain utama / localhost:
+  // Hindari overhead dekripsi JWT/NextAuth pada navigasi antar halaman publik (/, /portofolio, /harga, /tentang)
+  if (!isAdminSubdomain && !pathname.startsWith("/admin") && pathname !== "/login") {
     return NextResponse.next();
   }
 
-  // ==========================================
-  // KASUS 2: PENGUNJUNG DI SUBDOMAIN ADMIN
-  // ==========================================
   const secret = process.env.NEXTAUTH_SECRET || "lensa-arsya-secure-admin-secret-2026";
   const token = await getToken({ req, secret });
   const isAuthenticated = Boolean(token);
 
-  // Jika pengunjung membuka halaman login di subdomain admin:
-  if (pathname === "/login" || pathname === "/admin/login") {
-    // Jika sudah login, lempar ke dashboard (/)
-    if (isAuthenticated) {
-      url.pathname = "/";
+  // ==========================================
+  // KASUS 1: PENGUNJUNG DI SUBDOMAIN ADMIN
+  // ==========================================
+  if (isAdminSubdomain) {
+    // Jika pengunjung membuka halaman login di subdomain admin:
+    if (pathname === "/login" || pathname === "/admin/login") {
+      // Jika sudah login, lempar ke dashboard (/)
+      if (isAuthenticated) {
+        url.pathname = "/";
+        return NextResponse.redirect(url);
+      }
+      // Tampilkan tampilan login admin
+      url.pathname = "/admin/login";
+      return NextResponse.rewrite(url);
+    }
+
+    // Untuk semua halaman lainnya di subdomain admin:
+    if (!isAuthenticated) {
+      // Belum login -> arahkan ke /login di subdomain admin
+      url.pathname = "/login";
       return NextResponse.redirect(url);
     }
-    // Tampilkan tampilan login admin
-    url.pathname = "/admin/login";
-    return NextResponse.rewrite(url);
+
+    // Sudah login: jika membuka root subdomain (/), tampilkan dashboard admin (/admin)
+    if (pathname === "/") {
+      url.pathname = "/admin";
+      return NextResponse.rewrite(url);
+    }
+
+    return NextResponse.next();
   }
 
-  // Untuk semua halaman lainnya di subdomain admin (misal / atau /admin):
-  if (!isAuthenticated) {
-    // Belum login -> arahkan ke /login di subdomain admin
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
+  // ==========================================
+  // KASUS 2: PENGUNJUNG DI DOMAIN UTAMA / LOCALHOST
+  // ==========================================
+  // Jika pengunjung membuka /admin/login atau /login:
+  if (pathname === "/admin/login" || pathname === "/login") {
+    // Jika sudah terautentikasi, arahkan langsung ke /admin
+    if (isAuthenticated) {
+      url.pathname = "/admin";
+      return NextResponse.redirect(url);
+    }
+    // Jika mengakses /login biasa, arahkan ke /admin/login
+    if (pathname === "/login") {
+      url.pathname = "/admin/login";
+      return NextResponse.redirect(url);
+    }
+    return NextResponse.next();
   }
 
-  // Sudah login: jika membuka root subdomain (/), tampilkan dashboard admin (/admin)
-  if (pathname === "/") {
-    url.pathname = "/admin";
-    return NextResponse.rewrite(url);
+  // Jika pengunjung mencoba mengakses rute /admin (dashboard atau sub-rute):
+  if (pathname.startsWith("/admin")) {
+    if (!isAuthenticated) {
+      // Belum login -> arahkan ke halaman login admin
+      url.pathname = "/admin/login";
+      return NextResponse.redirect(url);
+    }
+    return NextResponse.next();
   }
 
+  // Halaman publik berjalan seperti biasa
   return NextResponse.next();
 }
 

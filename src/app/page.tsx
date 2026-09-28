@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { DEFAULT_HERO_BG_URL } from "@/lib/constants";
 
 const highlights = [
   {
@@ -131,6 +132,18 @@ const faqs = [
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [heroBgUrl, setHeroBgUrl] = useState(DEFAULT_HERO_BG_URL);
+
+  useEffect(() => {
+    fetch("/api/settings")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.data?.hero_bg_url) {
+          setHeroBgUrl(data.data.hero_bg_url);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <>
@@ -141,26 +154,25 @@ export default function Home() {
           <div
             className="absolute inset-0 bg-cover bg-center scale-105 transition-transform duration-1000"
             style={{
-              backgroundImage:
-                "url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1920&q=80')",
+              backgroundImage: `url('${heroBgUrl}')`,
             }}
           />
           {/* Deep dark gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#090a0f]/90 via-[#090a0f]/75 to-[#090a0f]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#070913]/90 via-[#070913]/75 to-[#070913]" />
           
-          {/* Ambient Red & White light glows */}
-          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-red-600/20 rounded-full blur-[140px] pointer-events-none" />
-          <div className="absolute top-1/3 -right-20 w-[400px] h-[400px] bg-rose-500/15 rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-10 -left-20 w-[450px] h-[450px] bg-red-700/15 rounded-full blur-[130px] pointer-events-none" />
+          {/* Ambient Blue & Cyan light glows */}
+          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-blue-600/20 rounded-full blur-[140px] pointer-events-none" />
+          <div className="absolute top-1/3 -right-20 w-[400px] h-[400px] bg-sky-500/15 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-10 -left-20 w-[450px] h-[450px] bg-blue-700/15 rounded-full blur-[130px] pointer-events-none" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24 text-center">
           <div className="max-w-4xl mx-auto">
             {/* Camera Viewfinder Status Badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-red-950/60 border border-red-500/40 text-red-200 text-xs sm:text-sm font-semibold mb-6 sm:mb-8 backdrop-blur-md shadow-[0_0_20px_rgba(225,29,72,0.25)] animate-fade-in-up">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-blue-950/60 border border-blue-500/40 text-blue-200 text-xs sm:text-sm font-semibold mb-6 sm:mb-8 backdrop-blur-md shadow-[0_0_20px_rgba(37,99,235,0.25)] animate-fade-in-up">
               <span className="flex h-2.5 w-2.5 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
               </span>
               <span>● REC 4K UHD</span>
               <span className="text-white/40">|</span>
@@ -172,7 +184,7 @@ export default function Home() {
               More Than
               <br />
               What You{" "}
-              <span className="gradient-text drop-shadow-[0_4px_25px_rgba(225,29,72,0.5)]">See</span>
+              <span className="gradient-text drop-shadow-[0_4px_25px_rgba(37,99,235,0.6)]">See</span>
             </h1>
 
             {/* Tagline / Subtitle */}
@@ -218,19 +230,19 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Ambient bottom red fade */}
+        {/* Ambient bottom fade */}
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[var(--color-surface)] to-transparent pointer-events-none" />
       </section>
 
       {/* Highlights Section */}
       <section className="py-20 sm:py-28 relative overflow-hidden">
-        {/* Ambient red orbs */}
-        <div className="absolute top-1/2 left-0 w-80 h-80 bg-red-600/10 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-10 right-0 w-96 h-96 bg-red-500/10 rounded-full blur-[150px] pointer-events-none" />
+        {/* Ambient blue orbs */}
+        <div className="absolute top-1/2 left-0 w-80 h-80 bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-10 right-0 w-96 h-96 bg-sky-500/10 rounded-full blur-[150px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="section-heading">
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-red-400 bg-red-950/40 border border-red-500/30 mb-3">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-blue-400 bg-blue-950/40 border border-blue-500/30 mb-3">
               Galeri Unggulan
             </span>
             <h2>
@@ -252,7 +264,7 @@ export default function Home() {
                   loading="lazy"
                 />
                 <div className="photo-overlay flex flex-col justify-end p-6">
-                  <span className="inline-block px-2.5 py-1 rounded-md text-xs font-bold tracking-wide uppercase bg-red-600 text-white mb-2 self-start shadow-md">
+                  <span className="inline-block px-2.5 py-1 rounded-md text-xs font-bold tracking-wide uppercase bg-blue-600 text-white mb-2 self-start shadow-md">
                     {item.category}
                   </span>
                   <h3 className="text-white font-bold text-xl mb-1">{item.alt}</h3>
@@ -271,10 +283,10 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 sm:py-28 relative bg-gradient-to-b from-transparent via-red-950/15 to-transparent">
+      <section className="py-20 sm:py-28 relative bg-gradient-to-b from-transparent via-blue-950/20 to-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="section-heading">
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-red-400 bg-red-950/40 border border-red-500/30 mb-3">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-blue-400 bg-blue-950/40 border border-blue-500/30 mb-3">
               Layanan Fotografi
             </span>
             <h2>
@@ -285,12 +297,12 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {services.map((svc, i) => (
-              <div key={i} className="glass-card p-7 sm:p-8 flex flex-col justify-between group hover:border-red-500/50">
+              <div key={i} className="glass-card p-7 sm:p-8 flex flex-col justify-between group hover:border-blue-500/50">
                 <div>
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-600/20 to-red-900/30 border border-red-500/30 flex items-center justify-center mb-6 text-red-400 group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(225,29,72,0.2)]">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600/20 to-blue-900/30 border border-blue-500/30 flex items-center justify-center mb-6 text-blue-400 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.25)]">
                     {svc.icon}
                   </div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-red-400 mb-1">{svc.tagline}</div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-1">{svc.tagline}</div>
                   <h3 className="text-2xl font-bold text-white mb-3">{svc.title}</h3>
                   <p className="text-gray-300 text-sm leading-relaxed mb-6">{svc.desc}</p>
                 </div>
@@ -300,7 +312,7 @@ export default function Home() {
                   <ul className="space-y-1.5">
                     {svc.features.map((feat, idx) => (
                       <li key={idx} className="text-xs text-gray-400 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                         <span>{feat}</span>
                       </li>
                     ))}
@@ -314,12 +326,12 @@ export default function Home() {
 
       {/* Why Choose Us - Keunggulan Kami */}
       <section className="py-20 sm:py-28 relative overflow-hidden">
-        {/* Ambient red light */}
-        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[160px] pointer-events-none" />
+        {/* Ambient blue light */}
+        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[160px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="section-heading">
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-red-400 bg-red-950/40 border border-red-500/30 mb-3">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-blue-400 bg-blue-950/40 border border-blue-500/30 mb-3">
               Keunggulan Kami
             </span>
             <h2>
@@ -329,8 +341,8 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="glass-card p-6 border-red-500/20">
-              <div className="w-12 h-12 rounded-xl bg-red-600/15 border border-red-500/30 flex items-center justify-center text-red-400 mb-4 font-bold text-lg">
+            <div className="glass-card p-6 border-blue-500/20">
+              <div className="w-12 h-12 rounded-xl bg-blue-600/15 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-4 font-bold text-lg">
                 01
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Kamera & Lensa Pro</h3>
@@ -339,8 +351,8 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="glass-card p-6 border-red-500/20">
-              <div className="w-12 h-12 rounded-xl bg-red-600/15 border border-red-500/30 flex items-center justify-center text-red-400 mb-4 font-bold text-lg">
+            <div className="glass-card p-6 border-blue-500/20">
+              <div className="w-12 h-12 rounded-xl bg-blue-600/15 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-4 font-bold text-lg">
                 02
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Retouch & Color Grading</h3>
@@ -349,8 +361,8 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="glass-card p-6 border-red-500/20">
-              <div className="w-12 h-12 rounded-xl bg-red-600/15 border border-red-500/30 flex items-center justify-center text-red-400 mb-4 font-bold text-lg">
+            <div className="glass-card p-6 border-blue-500/20">
+              <div className="w-12 h-12 rounded-xl bg-blue-600/15 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-4 font-bold text-lg">
                 03
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Pengiriman Cloud Cepat</h3>
@@ -359,8 +371,8 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="glass-card p-6 border-red-500/20">
-              <div className="w-12 h-12 rounded-xl bg-red-600/15 border border-red-500/30 flex items-center justify-center text-red-400 mb-4 font-bold text-lg">
+            <div className="glass-card p-6 border-blue-500/20">
+              <div className="w-12 h-12 rounded-xl bg-blue-600/15 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-4 font-bold text-lg">
                 04
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Bebas Request Konsep</h3>
@@ -373,10 +385,10 @@ export default function Home() {
       </section>
 
       {/* Alur Kerja / Workflow Section */}
-      <section className="py-20 sm:py-28 relative bg-[#0d0e17]/80 border-y border-white/5">
+      <section className="py-20 sm:py-28 relative bg-[#080b14]/80 border-y border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="section-heading">
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-red-400 bg-red-950/40 border border-red-500/30 mb-3">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-blue-400 bg-blue-950/40 border border-blue-500/30 mb-3">
               Proses Mudah
             </span>
             <h2>
@@ -390,8 +402,8 @@ export default function Home() {
               <div key={idx} className="relative glass-card p-6 sm:p-7 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-3xl font-black text-red-500/80 tracking-tight">{wf.step}</span>
-                    <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                    <span className="text-3xl font-black text-blue-500/80 tracking-tight">{wf.step}</span>
+                    <span className="w-2 h-2 rounded-full bg-blue-500"></span>
                   </div>
                   <h3 className="text-lg font-bold text-white mb-2">{wf.title}</h3>
                   <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">{wf.desc}</p>
@@ -415,11 +427,11 @@ export default function Home() {
 
       {/* Testimoni Klien */}
       <section className="py-20 sm:py-28 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-red-600/10 rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-blue-600/10 rounded-full blur-[150px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="section-heading">
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-red-400 bg-red-950/40 border border-red-500/30 mb-3">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-blue-400 bg-blue-950/40 border border-blue-500/30 mb-3">
               Ulasan Klien
             </span>
             <h2>
@@ -430,7 +442,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {testimonials.map((item, idx) => (
-              <div key={idx} className="glass-card p-7 flex flex-col justify-between hover:border-red-500/40">
+              <div key={idx} className="glass-card p-7 flex flex-col justify-between hover:border-blue-500/40">
                 <div>
                   {/* Rating Stars */}
                   <div className="flex gap-1 text-amber-400 mb-4">
@@ -451,7 +463,7 @@ export default function Home() {
                     <div className="font-bold text-white text-sm">{item.name}</div>
                     <div className="text-xs text-gray-400">{item.role}</div>
                   </div>
-                  <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-red-900/30 text-red-400 border border-red-500/30">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-900/30 text-blue-400 border border-blue-500/30">
                     {item.tag}
                   </span>
                 </div>
@@ -462,10 +474,10 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 sm:py-28 relative bg-[#0d0e17]/80 border-t border-white/5">
+      <section className="py-20 sm:py-28 relative bg-[#080b14]/80 border-t border-white/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="section-heading">
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-red-400 bg-red-950/40 border border-red-500/30 mb-3">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-blue-400 bg-blue-950/40 border border-blue-500/30 mb-3">
               FAQ
             </span>
             <h2>
@@ -480,14 +492,14 @@ export default function Home() {
               return (
                 <div
                   key={idx}
-                  className="glass-card overflow-hidden transition-all duration-200 border-red-500/20"
+                  className="glass-card overflow-hidden transition-all duration-200 border-blue-500/20"
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 font-semibold text-white hover:text-red-300 transition-colors"
+                    className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 font-semibold text-white hover:text-blue-300 transition-colors"
                   >
                     <span className="text-base sm:text-lg">{faq.q}</span>
-                    <span className="text-red-400 flex-shrink-0 text-xl font-bold">
+                    <span className="text-blue-400 flex-shrink-0 text-xl font-bold">
                       {isOpen ? "−" : "+"}
                     </span>
                   </button>
@@ -506,12 +518,12 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-20 sm:py-28 relative overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-red-600/20 via-rose-600/15 to-transparent rounded-full blur-[140px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-blue-600/20 via-sky-600/15 to-transparent rounded-full blur-[140px]" />
         </div>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="glass-card p-8 sm:p-14 border-red-500/40 shadow-2xl shadow-red-950/50">
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-red-400 bg-red-950/60 border border-red-500/30 mb-4">
+          <div className="glass-card p-8 sm:p-14 border-blue-500/40 shadow-2xl shadow-blue-950/50">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-blue-400 bg-blue-950/60 border border-blue-500/30 mb-4">
               Mulai Sesi Anda
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-6 text-white">

@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { neon } from "@neondatabase/serverless";
 import { ensureDatabaseInitialized } from "@/lib/db/init";
 import { INITIAL_PHOTOS } from "@/lib/constants";
+import { getLocalPhotos, addLocalPhoto } from "@/lib/localDb";
 
 const connectionString =
   process.env.POSTGRES_URL ||
@@ -13,7 +14,8 @@ const connectionString =
 export async function GET() {
   try {
     if (!connectionString) {
-      return NextResponse.json({ success: true, data: INITIAL_PHOTOS, source: "fallback" });
+      const localPhotos = await getLocalPhotos();
+      return NextResponse.json({ success: true, data: localPhotos, source: "local-file" });
     }
 
     await ensureDatabaseInitialized();
@@ -53,10 +55,18 @@ export async function POST(req: NextRequest) {
     }
 
     if (!connectionString) {
+      const savedPhoto = await addLocalPhoto({
+        title,
+        description,
+        image_url,
+        category,
+        sort_order: Number(sort_order) || 1,
+      });
       return NextResponse.json({
-        success: false,
-        error: "POSTGRES_URL belum dikonfigurasi di lingkungan Vercel.",
-      }, { status: 500 });
+        success: true,
+        data: savedPhoto,
+        source: "local-file",
+      });
     }
 
     await ensureDatabaseInitialized();

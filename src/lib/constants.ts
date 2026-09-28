@@ -1,8 +1,9 @@
-import { Category, PackageItem, Photo } from "./types";
+import { Category, PackageItem, Photo, AddonItem } from "./types";
 
 export const SHEETDB_API_URL = "https://sheetdb.io/api/v1/vtw78mod9lrzq";
 export const CLOUDINARY_URL = "cloudinary://579251134143585:BmZI37AVN3AcZK8RhGL0wN1LJpo@ihfrcyan";
 export const CLOUDINARY_CLOUD_NAME = "ihfrcyan";
+export const DEFAULT_HERO_BG_URL = "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1920&q=80";
 
 export const DEFAULT_ADMIN = {
   username: "admin",
@@ -126,3 +127,31 @@ export const INITIAL_PACKAGES: PackageItem[] = [
     ],
   },
 ];
+
+export const INITIAL_ADDONS: AddonItem[] = [
+  {
+    id: "addon-1",
+    name: "Tambahan Durasi Pemotretan",
+    price: "Rp 100.000 / Jam",
+    desc: "Fleksibel jika Anda ingin eksplorasi lokasi lebih banyak",
+  },
+  {
+    id: "addon-2",
+    name: "Cetak Frame Kayu Minimalis (12R/A3)",
+    price: "Rp 85.000 / Buah",
+    desc: "Termasuk cetak foto laminasi matte & bingkai kayu elegan",
+  },
+  {
+    id: "addon-3",
+    name: "Flashdisk Kayu Eksklusif 32GB",
+    price: "Rp 95.000 / Box",
+    desc: "Cocok sebagai kado wisuda fisik yang berkesan",
+  },
+  {
+    id: "addon-4",
+    name: "Sesi Luar Kota / Custom Venue",
+    price: "Menyesuaikan Lokasi",
+    desc: "Biaya transport & akomodasi disesuaikan jarak",
+  },
+];
+
